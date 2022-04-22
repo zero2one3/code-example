@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>仅用一个HTML标签，画出带动画的抖音Logo</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .remind {
+      position: fixed;
+      top: 40px;
+      width: calc(100% - 60px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .remind-line {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* -------- 此分割线以下为示例的所有样式 --------- */
+    
+    .douyin {
+      width: 100px;
+      aspect-ratio: 0.87;
+      padding: 20px calc(20px + 100px / 0.87 * 0.13 / 2);
+      border-radius: 25%;
+      background-color: #000;
+      display: grid;
+      cursor: pointer;
+    }
+
+    .douyin::before, 
+    .douyin::after {
+      content: "";
+      grid-area: 1/1;  /* 居中展示 */
+      mix-blend-mode: lighten;
+      background: 
+        radial-gradient(
+          100% 100% at 100% 100%, 
+          transparent 0 50%, 
+          var(--color) 50% 100%, 
+          transparent
+        ) left 52%/41% 36% no-repeat,
+        radial-gradient(
+          50% 100% at top,
+          transparent 44%,
+          var(--color) 45% 98%,
+          transparent 
+        ) 0 100%/73% 31% no-repeat,
+        linear-gradient(var(--color), var(--color)) 66% 0/20% 70% no-repeat,
+        radial-gradient(
+          100% 100% at 100% 0,
+          transparent 0 58%,
+          var(--color) 58.5% 99%,
+          transparent 
+        ) 100% 0/47% 41.8% no-repeat;
+    }
+
+    .douyin::before {
+      --color: #08fff9;
+      transform: translate(calc(var(--x, 0%) - 3%), calc(var(--x, 0%) - 3%));
+    }
+
+    .douyin::after {
+      --color: #f00044;
+      transform: translate(calc(3% - var(--x, 0%)), calc(3% - var(--x, 0%)));
+    }
+
+    /* hover 时执行动画 */
+    .douyin:hover::before,
+    .douyin:hover::after {
+      --x: 0.1%;
+      transition: transform cubic-bezier(.5,300,.5,-150) .3s;
+    }
+
+    #toggle {
+      margin-top: 20px;
+    }
+
+    /* lgoo "异变" */
+    #other-logo {
+      filter: invert(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="remind">
+    <div class="remind-line">
+      本代码示例为
+      <strong>零一</strong>
+      原创，若有疑问可以加我微信交流：Lpyexplore333
+    </div>
+    <div class="remind-line">
+      欢迎关注我的公众号：
+      <strong>前端印象</strong>
+      ，每日更新精选好文
+    </div>
+    <div class="remind-line">
+      本文示例代码配套文章：
+      <a href="" target="_blank">仅用一个HTML标签，实现带动画的抖音Logo</a>
+    </div>
+  </div>
+
+  <!-- --------- 此分割线以下为示例代码 ---------- -->
+
+  <div class="douyin"></div>
+  <button id="toggle">切换Logo样式</button>
+  
+  <script>
+    const toggle = document.getElementById('toggle')
+    const douyin = document.querySelector('.douyin')
+    toggle.addEventListener('click', () => {
+      douyin.setAttribute('id', douyin.getAttribute('id') ? '' : 'other-logo')
+    })
+  </script>
+</body>
+</html>
